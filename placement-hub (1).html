@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Placement Prep Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --primary:#0A0E27;--secondary:#1A1F3A;--accent:#00D9FF;--accent-warm:#FF6B35;
+  --text-primary:#E8EAF6;--text-secondary:#B0B7C3;
+  --border:rgba(0,217,255,0.2);--card-bg:rgba(26,31,58,0.6);
+  --success:#2ECC71;--warning:#F39C12;--danger:#E74C3C;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Raleway',sans-serif;background:linear-gradient(135deg,#0A0E27 0%,#1A1F3A 50%,#0F1629 100%);color:var(--text-primary);min-height:100vh;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(circle at 20% 30%,rgba(0,217,255,0.08) 0%,transparent 50%),radial-gradient(circle at 80% 70%,rgba(255,107,53,0.06) 0%,transparent 50%);pointer-events:none;z-index:0;}
+.wrap{max-width:1400px;margin:0 auto;padding:0 2rem;position:relative;z-index:1;}
+
+/* ─── HEADER ─── */
+header{padding:1.4rem 0;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;background:rgba(10,14,39,0.85);backdrop-filter:blur(12px);}
+.header-row{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;}
+.logo{font-size:1.7rem;font-weight:800;background:linear-gradient(135deg,var(--accent),var(--accent-warm));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;cursor:pointer;}
+.hstats{display:flex;gap:2rem;}
+.hstat{text-align:center;}
+.hstat-v{font-size:1.4rem;font-weight:700;color:var(--accent);font-family:'JetBrains Mono',monospace;}
+.hstat-l{font-size:0.7rem;color:var(--text-secondary);text-transform:uppercase;letter-spacing:1px;}
+
+/* ─── COMMON ─── */
+.page{display:none;animation:fadeUp .45s ease both;}
+.page.on{display:block;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+.sec-title{font-size:1.8rem;font-weight:700;margin-bottom:1.6rem;position:relative;display:inline-block;}
+.sec-title::after{content:'';position:absolute;bottom:-6px;left:0;width:50px;height:3px;background:linear-gradient(90deg,var(--accent),transparent);}
+.btn{padding:.85rem 2rem;border:none;border-radius:8px;font-weight:600;font-size:.95rem;cursor:pointer;transition:all .25s;font-family:'Raleway',sans-serif;text-transform:uppercase;letter-spacing:.5px;}
+.btn-primary{background:linear-gradient(135deg,var(--accent),var(--accent-warm));color:#fff;}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(0,217,255,.3);}
+.btn-sec{background:rgba(255,255,255,.05);color:var(--text-primary);border:1px solid var(--border);}
+.btn-sec:hover{background:rgba(255,255,255,.1);border-color:var(--accent);}
+.btn:disabled{opacity:.45;cursor:not-allowed;transform:none!important;box-shadow:none!important;}
+.card{background:var(--card-bg);border:1px solid var(--border);border-radius:16px;backdrop-filter:blur(10px);}
+
+/* ─── DASHBOARD ─── */
+.mod-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.8rem;margin-bottom:3.5rem;}
+.mod-card{padding:2rem;cursor:pointer;transition:all .35s cubic-bezier(.4,0,.2,1);position:relative;overflow:hidden;}
+.mod-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--accent),var(--accent-warm));opacity:0;transition:opacity .35s;}
+.mod-card:hover{transform:translateY(-7px);border-color:var(--accent);box-shadow:0 18px 38px rgba(0,217,255,.18);}
+.mod-card:hover::before{opacity:.06;}
+.mod-card > *{position:relative;z-index:1;}
+.mod-icon{font-size:2.6rem;margin-bottom:.8rem;}
+.mod-title{font-size:1.35rem;font-weight:700;margin-bottom:.4rem;}
+.mod-desc{color:var(--text-secondary);line-height:1.55;margin-bottom:1.2rem;font-size:.93rem;}
+.mod-meta{display:flex;justify-content:space-between;font-size:.82rem;font-family:'JetBrains Mono',monospace;}
+.mod-meta span{color:var(--accent);font-weight:600;}
+
+/* progress */
+.prog-wrap{padding:2rem;margin-bottom:3rem;}
+.prog-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:2rem;margin-top:1.4rem;}
+.prog-head{display:flex;justify-content:space-between;margin-bottom:.7rem;}
+.prog-label{font-weight:600;font-size:.92rem;}
+.prog-pct{font-family:'JetBrains Mono',monospace;color:var(--accent);font-weight:600;font-size:.92rem;}
+.prog-bg{height:8px;background:rgba(255,255,255,.1);border-radius:10px;overflow:hidden;}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent-warm));border-radius:10px;transition:width 1s cubic-bezier(.4,0,.2,1);box-shadow:0 0 8px rgba(0,217,255,.45);}
+
+/* ─── TOPIC PICKER ─── */
+.topic-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.8rem;flex-wrap:wrap;gap:1rem;}
+.topic-header h2{font-size:1.6rem;font-weight:700;}
+.topic-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1.2rem;}
+.topic-card{padding:1.5rem;border-radius:14px;cursor:pointer;transition:all .3s;border:1px solid var(--border);background:var(--card-bg);}
+.topic-card:hover{border-color:var(--accent);transform:translateY(-4px);box-shadow:0 10px 24px rgba(0,217,255,.15);}
+.topic-card.picked{border-color:var(--accent);background:rgba(0,217,255,.08);}
+.topic-card.picked .tc-badge{background:var(--accent);color:#0A0E27;}
+.tc-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:.6rem;}
+.tc-name{font-weight:700;font-size:1rem;}
+.tc-badge{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px;padding:.25rem .55rem;border-radius:20px;background:rgba(255,255,255,.08);color:var(--text-secondary);}
+.tc-desc{font-size:.82rem;color:var(--text-secondary);line-height:1.45;}
+.topic-actions{margin-top:2rem;display:flex;gap:1rem;}
+
+/* ─── QUIZ ─── */
+.quiz-wrap{max-width:880px;margin:2rem auto;padding:2.2rem;}
+.quiz-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.6rem;padding-bottom:1.2rem;border-bottom:1px solid var(--border);flex-wrap:wrap;gap:.8rem;}
+.quiz-top h2{font-size:1.5rem;font-weight:700;}
+.quiz-timer{font-family:'JetBrains Mono',monospace;font-size:1.35rem;color:var(--accent-warm);font-weight:600;}
+.q-num{color:var(--accent);font-weight:600;font-family:'JetBrains Mono',monospace;margin-bottom:.7rem;font-size:.88rem;}
+.q-text{font-size:1.15rem;line-height:1.75;margin-bottom:1.6rem;font-weight:500;}
+.opts{display:flex;flex-direction:column;gap:.85rem;}
+.opt{background:rgba(255,255,255,.03);border:2px solid rgba(255,255,255,.1);border-radius:12px;padding:1rem 1.3rem;cursor:pointer;transition:all .25s;display:flex;align-items:center;gap:1rem;}
+.opt:hover{border-color:var(--accent);background:rgba(0,217,255,.05);transform:translateX(6px);}
+.opt.sel{border-color:var(--accent);background:rgba(0,217,255,.1);}
+.opt.sel .opt-lbl{background:var(--accent);color:#0A0E27;}
+.opt-lbl{width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;font-size:.88rem;transition:all .25s;}
+
+/* question map dots */
+.qmap{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1.6rem;}
+.qmap-dot{width:28px;height:28px;border-radius:7px;border:2px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);cursor:pointer;transition:all .22s;display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700;font-family:'JetBrains Mono',monospace;color:var(--text-secondary);}
+.qmap-dot:hover{border-color:var(--accent);}
+.qmap-dot.active{border-color:var(--accent);background:rgba(0,217,255,.15);color:var(--accent);}
+.qmap-dot.answered{border-color:var(--accent-warm);background:rgba(255,107,53,.12);color:var(--accent-warm);}
+.qmap-dot.skipped{border-color:var(--warning);background:rgba(243,156,18,.1);color:var(--warning);}
+
+/* hint box */
+.hint-box{margin-top:1.2rem;padding:1rem 1.3rem;border-radius:10px;background:rgba(255,107,53,.08);border:1px solid rgba(255,107,53,.25);display:none;animation:fadeUp .3s ease both;}
+.hint-box.on{display:flex;align-items:flex-start;gap:.7rem;}
+.hint-box .hi{font-size:1.1rem;flex-shrink:0;}
+.hint-box p{font-size:.88rem;color:var(--text-secondary);line-height:1.5;}
+.hint-used-badge{font-size:.7rem;color:var(--warning);font-weight:600;text-transform:uppercase;letter-spacing:.5px;}
+
+/* bottom bar */
+.q-bar{display:flex;justify-content:space-between;align-items:center;margin-top:1.8rem;flex-wrap:wrap;gap:.8rem;}
+.q-bar-left,.q-bar-right{display:flex;gap:.6rem;}
+
+/* ─── RESULTS ─── */
+.res-wrap{text-align:center;padding:2rem 1rem;}
+.res-score{font-size:3.8rem;font-weight:800;background:linear-gradient(135deg,var(--accent),var(--accent-warm));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin:1rem 0;font-family:'JetBrains Mono',monospace;}
+.res-msg{font-size:1.3rem;margin-bottom:1.5rem;color:var(--text-secondary);}
+.res-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:1.2rem;margin:1.8rem 0;}
+.res-stat{background:rgba(255,255,255,.03);padding:1.3rem;border-radius:12px;border:1px solid var(--border);}
+.res-stat-v{font-size:1.7rem;font-weight:700;font-family:'JetBrains Mono',monospace;margin-bottom:.3rem;}
+.res-stat-l{color:var(--text-secondary);font-size:.82rem;}
+.res-btns{display:flex;gap:1rem;justify-content:center;margin-top:1.8rem;flex-wrap:wrap;}
+
+/* review list */
+.review-list{margin-top:1.6rem;max-height:320px;overflow-y:auto;display:flex;flex-direction:column;gap:.7rem;padding-right:.3rem;}
+.review-list::-webkit-scrollbar{width:5px;}
+.review-list::-webkit-scrollbar-track{background:rgba(255,255,255,.04);border-radius:3px;}
+.review-list::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px;}
+.rev-item{display:flex;gap:1rem;align-items:flex-start;padding:1rem 1.2rem;border-radius:10px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.02);cursor:pointer;transition:border-color .2s;}
+.rev-item:hover{border-color:var(--accent);}
+.rev-item.correct{border-color:rgba(46,204,113,.35);background:rgba(46,204,113,.06);}
+.rev-item.wrong{border-color:rgba(231,76,60,.35);background:rgba(231,76,60,.06);}
+.rev-item.skipped-item{border-color:rgba(243,156,18,.35);background:rgba(243,156,18,.06);}
+.rev-badge{width:24px;height:24px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;flex-shrink:0;font-family:'JetBrains Mono',monospace;}
+.rev-badge.c{background:rgba(46,204,113,.2);color:var(--success);}
+.rev-badge.w{background:rgba(231,76,60,.2);color:var(--danger);}
+.rev-badge.s{background:rgba(243,156,18,.2);color:var(--warning);}
+.rev-q{font-size:.88rem;line-height:1.4;font-weight:500;text-align:left;}
+.rev-ans{font-size:.78rem;color:var(--text-secondary);margin-top:.25rem;text-align:left;}
+
+/* ─── RESPONSIVE ─── */
+@media(max-width:600px){
+  .wrap{padding:0 1rem;}
+  .mod-grid{grid-template-columns:1fr;}
+  .quiz-wrap{padding:1.3rem;}
+  .q-bar{flex-direction:column;align-items:stretch;}
+  .q-bar-left,.q-bar-right{justify-content:center;}
+  .btn{width:100%;}
+}
+</style>
+</head>
+<body>
+<header><div class="wrap"><div class="header-row">
+  <div class="logo" onclick="goHome()">🎯 PLACEMENT PREP HUB</div>
+  <div class="hstats">
+    <div class="hstat"><div class="hstat-v" id="hScore">0</div><div class="hstat-l">Score</div></div>
+    <div class="hstat"><div class="hstat-v" id="hTests">0</div><div class="hstat-l">Tests</div></div>
+    <div class="hstat"><div class="hstat-v" id="hStreak">0</div><div class="hstat-l">Streak</div></div>
+  </div>
+</div></div></header>
+
+<div class="wrap">
+
+<!-- PAGE 1: DASHBOARD -->
+<div id="pgDash" class="page on" style="padding-top:2.2rem;">
+  <h2 class="sec-title">Practice Modules</h2>
+  <div class="mod-grid">
+    <div class="mod-card card" onclick="goTopics('aptitude')">
+      <div class="mod-icon">🧮</div>
+      <div class="mod-title">Aptitude Tests</div>
+      <div class="mod-desc">Quantitative reasoning, logical thinking &amp; problem-solving</div>
+      <div class="mod-meta">Topics: <span>5</span>&nbsp;&nbsp;&nbsp;Questions: <span>25</span></div>
+    </div>
+    <div class="mod-card card" onclick="goTopics('technical')">
+      <div class="mod-icon">💻</div>
+      <div class="mod-title">Technical MCQs</div>
+      <div class="mod-desc">CS fundamentals, data structures, algorithms &amp; languages</div>
+      <div class="mod-meta">Topics: <span>6</span>&nbsp;&nbsp;&nbsp;Questions: <span>30</span></div>
+    </div>
+    <div class="mod-card card" onclick="goTopics('interview')">
+      <div class="mod-icon">🎤</div>
+      <div class="mod-title">Interview Prep</div>
+      <div class="mod-desc">Behavioural, HR, situational &amp; strategy questions</div>
+      <div class="mod-meta">Topics: <span>4</span>&nbsp;&nbsp;&nbsp;Questions: <span>20</span></div>
+    </div>
+  </div>
+
+  <h2 class="sec-title">Your Progress</h2>
+  <div class="prog-wrap card">
+    <div class="prog-grid">
+      <div><div class="prog-head"><span class="prog-label">🧮 Aptitude</span><span class="prog-pct" id="pApt">0%</span></div><div class="prog-bg"><div class="prog-fill" id="bApt" style="width:0"></div></div></div>
+      <div><div class="prog-head"><span class="prog-label">💻 Technical</span><span class="prog-pct" id="pTec">0%</span></div><div class="prog-bg"><div class="prog-fill" id="bTec" style="width:0"></div></div></div>
+      <div><div class="prog-head"><span class="prog-label">🎤 Interview</span><span class="prog-pct" id="pInt">0%</span></div><div class="prog-bg"><div class="prog-fill" id="bInt" style="width:0"></div></div></div>
+      <div><div class="prog-head"><span class="prog-label">⭐ Overall</span><span class="prog-pct" id="pAll">0%</span></div><div class="prog-bg"><div class="prog-fill" id="bAll" style="width:0"></div></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE 2: TOPIC PICKER -->
+<div id="pgTopics" class="page" style="padding-top:2.2rem;">
+  <div class="topic-header">
+    <h2 id="tpTitle">Choose a Topic</h2>
+    <button class="btn btn-sec" onclick="goHome()">← Back</button>
+  </div>
+  <div class="topic-grid" id="topicGrid"></div>
+  <div class="topic-actions">
+    <button class="btn btn-primary" id="startBtn" onclick="startQuiz()" disabled>Start Quiz →</button>
+  </div>
+</div>
+
+<!-- PAGE 3: QUIZ -->
+<div id="pgQuiz" class="page">
+  <div class="quiz-wrap card">
+    <div class="quiz-top">
+      <h2 id="qzTitle">Quiz</h2>
+      <div style="display:flex;align-items:center;gap:1.2rem;flex-wrap:wrap;">
+        <span class="hint-used-badge" id="hintBadge" style="display:none">💡 Hint used</span>
+        <div class="quiz-timer" id="timer">00:00</div>
+      </div>
+    </div>
+    <div class="qmap" id="qmap"></div>
+    <div class="q-num" id="qNum">Question 1 of 5</div>
+    <div class="q-text" id="qText"></div>
+    <div class="opts" id="opts"></div>
+    <div class="hint-box" id="hintBox"><span class="hi">💡</span><p id="hintText"></p></div>
+    <div class="q-bar">
+      <div class="q-bar-left">
+        <button class="btn btn-sec" onclick="goHome()">✕ Exit</button>
+        <button class="btn btn-sec" id="hintBtn" onclick="showHint()">💡 Hint</button>
+        <button class="btn btn-sec" id="skipBtn" onclick="skipQuestion()">⏭ Skip</button>
+      </div>
+      <div class="q-bar-right">
+        <button class="btn btn-sec" id="prevBtn" onclick="nav(-1)" disabled>← Prev</button>
+        <button class="btn btn-primary" id="nextBtn" onclick="nav(1)">Next →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE 4: RESULTS -->
+<div id="pgResult" class="page">
+  <div class="quiz-wrap card" style="max-width:780px;">
+    <div class="res-wrap">
+      <h3 style="font-size:1.4rem;">Quiz Complete</h3>
+      <div class="res-score" id="resScore">0/5</div>
+      <div class="res-msg" id="resMsg"></div>
+      <div class="res-grid">
+        <div class="res-stat"><div class="res-stat-v" style="color:var(--success)" id="resCorrect">0</div><div class="res-stat-l">Correct</div></div>
+        <div class="res-stat"><div class="res-stat-v" style="color:var(--danger)" id="resWrong">0</div><div class="res-stat-l">Wrong</div></div>
+        <div class="res-stat"><div class="res-stat-v" style="color:var(--warning)" id="resSkipped">0</div><div class="res-stat-l">Skipped</div></div>
+        <div class="res-stat"><div class="res-stat-v" style="color:var(--accent)" id="resPct">0%</div><div class="res-stat-l">Score</div></div>
+        <div class="res-stat"><div class="res-stat-v" style="color:var(--accent-warm)" id="resTime">0:00</div><div class="res-stat-l">Time</div></div>
+      </div>
+      <h4 style="text-align:left;margin-top:1.6rem;font-size:1rem;color:var(--text-secondary);text-transform:uppercase;letter-spacing:.8px;">Answer Review</h4>
+      <div class="review-list" id="reviewList"></div>
+      <div class="res-btns">
+        <button class="btn btn-primary" onclick="retake()">🔁 Retake</button>
+        <button class="btn btn-sec" onclick="goHome()">🏠 Dashboard</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /wrap -->
+
+<script>
+/* ============================================================
+   DATA  –  every topic has questions + per-question hints
+============================================================ */
+const DATA = {
+  aptitude: {
+    label:'Aptitude Tests', icon:'🧮',
+    topics: {
+      percentages: {
+        name:'Percentages & Profit',
+        desc:'Profit, loss & discount problems',
+        questions:[
+          { q:'A shopkeeper marks up an item by 50% and gives a 20% discount. Net profit %?',
+            o:['15%','20%','25%','30%'], a:1,
+            hint:'First calculate the marked price, then apply the discount on it.' },
+          { q:'If cost price is ₹200 and selling price is ₹260, what is the profit %?',
+            o:['25%','30%','35%','40%'], a:1,
+            hint:'Profit % = (SP − CP) ÷ CP × 100.' },
+          { q:'What is 35% of 700?',
+            o:['210','225','245','260'], a:2,
+            hint:'Multiply 700 × 0.35 directly.' },
+          { q:'A 20% discount reduces a price by ₹80. What was the original price?',
+            o:['₹320','₹380','₹400','₹420'], a:2,
+            hint:'20% of original = 80, so original = 80 ÷ 0.2.' },
+          { q:'Selling price is 120% of cost price. Profit percentage is?',
+            o:['10%','15%','20%','25%'], a:2,
+            hint:'If SP = 120% of CP, then profit = SP − CP = 20% of CP.' }
+        ]
+      },
+      ratios: {
+        name:'Ratios & Proportions',
+        desc:'Ratio, proportion & mixtures',
+        questions:[
+          { q:'Boys to girls ratio is 3:2 and there are 15 boys. How many girls?',
+            o:['8','10','12','15'], a:1,
+            hint:'If 3 parts = 15, then 1 part = 5, so 2 parts = 10.' },
+          { q:'Two numbers are in ratio 5:3. Their sum is 240. The larger number?',
+            o:['120','130','140','150'], a:3,
+            hint:'Total parts = 8. Larger number = (5 ÷ 8) × 240.' },
+          { q:'A mixture has milk & water in 3:1 ratio. How much water in 32 litres?',
+            o:['6 L','8 L','10 L','12 L'], a:1,
+            hint:'Water = 1 out of 4 total parts → 32 ÷ 4 = 8.' },
+          { q:'If A:B = 2:3 and B:C = 4:5, find A:B:C.',
+            o:['8:12:15','4:6:5','2:3:5','6:9:10'], a:0,
+            hint:'Make B the same in both ratios → A:B = 8:12, B:C = 12:15.' },
+          { q:'Two pipes fill a tank in 10 and 15 minutes. Together they fill it in?',
+            o:['5 min','6 min','7 min','8 min'], a:1,
+            hint:'Combined rate = 1/10 + 1/15 = 5/30 = 1/6 → 6 minutes.' }
+        ]
+      },
+      speed: {
+        name:'Speed, Time & Distance',
+        desc:'Classic motion problems',
+        questions:[
+          { q:'A train travels 60 km in 45 minutes. Speed in km/hr?',
+            o:['60 km/hr','70 km/hr','80 km/hr','90 km/hr'], a:2,
+            hint:'Speed = Distance ÷ Time. Convert 45 min to 0.75 hrs.' },
+          { q:'A car covers 240 km at 60 km/hr. Time taken?',
+            o:['3 hrs','4 hrs','5 hrs','6 hrs'], a:1,
+            hint:'Time = Distance ÷ Speed = 240 ÷ 60.' },
+          { q:'Two trains move toward each other at 40 & 60 km/hr, 500 km apart. They meet after?',
+            o:['4 hrs','5 hrs','6 hrs','7 hrs'], a:1,
+            hint:'Relative speed = 40 + 60 = 100 km/hr → time = 500/100.' },
+          { q:'A person walks 6 km in 2 hours. Speed in m/s (approx)?',
+            o:['0.83 m/s','1.67 m/s','2.50 m/s','3.33 m/s'], a:0,
+            hint:'3 km/hr = 3 × 1000 ÷ 3600 ≈ 0.83 m/s.' },
+          { q:'If speed increases by 25%, time to cover the same distance changes by?',
+            o:['Increases 25%','Decreases 20%','Decreases 25%','Increases 20%'], a:1,
+            hint:'New time = old ÷ 1.25 = 0.8 × old → 20% decrease.' }
+        ]
+      },
+      sequences: {
+        name:'Number Sequences',
+        desc:'Patterns & series problems',
+        questions:[
+          { q:'Next number in: 2, 6, 12, 20, 30, ?',
+            o:['36','40','42','44'], a:2,
+            hint:'Differences are 4, 6, 8, 10 … next difference = 12.' },
+          { q:'Next number in: 1, 4, 9, 16, 25, ?',
+            o:['30','34','36','49'], a:3,
+            hint:'These are perfect squares: 1², 2², 3², 4², 5², 6²…' },
+          { q:'Next number in: 3, 7, 13, 21, 31, ?',
+            o:['39','41','43','45'], a:1,
+            hint:'Differences: 4, 6, 8, 10 → next difference = 12.' },
+          { q:'Next letter in: A, C, F, J, O, ?',
+            o:['R','S','T','U'], a:2,
+            hint:'Letter gaps are +2, +3, +4, +5 → next gap = +6.' },
+          { q:'Next number in: 2, 3, 5, 8, 13, ?',
+            o:['18','20','21','23'], a:3,
+            hint:'Each number = sum of the two numbers before it.' }
+        ]
+      },
+      average: {
+        name:'Averages & Ages',
+        desc:'Average & age calculation problems',
+        questions:[
+          { q:'Average of 12, 15, 18, 21, and 24?',
+            o:['16','18','20','22'], a:1,
+            hint:'Sum = 90. Average = 90 ÷ 5 = 18.' },
+          { q:'Average of 5 numbers is 20. Adding a 6th makes average 22. The 6th number is?',
+            o:['28','30','32','34'], a:2,
+            hint:'New total = 22 × 6 = 132. Old total = 100. Difference = 32.' },
+          { q:'Ages of A & B are in ratio 2:3. In 5 years, ratio becomes 3:4. A\'s current age?',
+            o:['5','10','15','20'], a:1,
+            hint:'Let ages be 2x and 3x. Solve (2x+5)/(3x+5) = 3/4.' },
+          { q:'Average of first 10 terms is 15, average of first 11 is 16. The 11th term?',
+            o:['20','22','25','26'], a:3,
+            hint:'11th term = (11 × 16) − (10 × 15) = 176 − 150 = 26.' },
+          { q:'Average of 4 numbers is 25. Remove one and average becomes 24. Removed number?',
+            o:['25','27','28','29'], a:2,
+            hint:'Old sum = 100, new sum = 72 → removed = 100 − 72 = 28.' }
+        ]
+      }
+    }
+  },
+  technical: {
+    label:'Technical MCQs', icon:'💻',
+    topics: {
+      dsa: {
+        name:'Data Structures',
+        desc:'Arrays, stacks, queues, trees',
+        questions:[
+          { q:'Which data structure follows the LIFO principle?',
+            o:['Queue','Stack','Array','Linked List'], a:1,
+            hint:'LIFO = Last In, First Out — think of a stack of plates.' },
+          { q:'What is the time complexity of binary search?',
+            o:['O(n)','O(log n)','O(n log n)','O(n²)'], a:1,
+            hint:'Binary search halves the search space at every step.' },
+          { q:'Height of a perfectly balanced binary tree with 15 nodes?',
+            o:['2','3','4','5'], a:2,
+            hint:'Height = ⌊log₂(n)⌋ = ⌊log₂(15)⌋ = 3… but a full tree of height 3 has 15 nodes → height = 3, answer index starts at 0.' },
+          { q:'Which structure supports O(1) insertion at both ends?',
+            o:['Array','Stack','Deque','Queue'], a:2,
+            hint:'Double-Ended Queue (Deque) allows insert/remove at both ends.' },
+          { q:'Inorder traversal of a Binary Search Tree gives elements in?',
+            o:['Random order','Descending order','Ascending order','Level order'], a:2,
+            hint:'Left → Root → Right on a BST always produces sorted (ascending) output.' }
+        ]
+      },
+      algo: {
+        name:'Algorithms',
+        desc:'Sorting, searching & complexity',
+        questions:[
+          { q:'Which sorting algorithm is stable and guarantees O(n log n) worst case?',
+            o:['Quick Sort','Bubble Sort','Merge Sort','Heap Sort'], a:2,
+            hint:'Merge Sort is the textbook stable sort with O(n log n) in all cases.' },
+          { q:'Dijkstra\'s algorithm solves which problem?',
+            o:['Shortest path','Sorting','Minimum spanning tree','Cycle detection'], a:0,
+            hint:'Dijkstra finds shortest paths from a single source node.' },
+          { q:'Average space complexity of Quick Sort?',
+            o:['O(1)','O(log n)','O(n)','O(n²)'], a:1,
+            hint:'The recursion stack averages O(log n) depth.' },
+          { q:'Which algorithm uses the "Divide and Conquer" strategy?',
+            o:['Bubble Sort','Binary Search','Selection Sort','Insertion Sort'], a:1,
+            hint:'Binary Search divides the array in half each iteration.' },
+          { q:'Average-case time to insert into a hash table?',
+            o:['O(n)','O(log n)','O(1)','O(n²)'], a:2,
+            hint:'Hash tables give amortised O(1) insert on average.' }
+        ]
+      },
+      oop: {
+        name:'OOP Concepts',
+        desc:'Inheritance, polymorphism & encapsulation',
+        questions:[
+          { q:'What is encapsulation?',
+            o:['Bundling data & methods together','Creating multiple instances','Inheriting properties','Overloading functions'], a:0,
+            hint:'Encapsulation wraps data together with the methods that manipulate it.' },
+          { q:'Which keyword enables class inheritance in Java?',
+            o:['implements','extends','inherits','includes'], a:1,
+            hint:'"extends" lets a child class inherit from a parent class.' },
+          { q:'Method overloading means?',
+            o:['Same name, different parameters','Same name, same parameters','Different name, same parameters','Overriding a base method'], a:0,
+            hint:'Overloading = same method name but different parameter lists.' },
+          { q:'What defines an abstract class?',
+            o:['It cannot be instantiated directly','It is always final','It has no methods','It is the same as an interface'], a:0,
+            hint:'Abstract classes can hold abstract + concrete methods but cannot be instantiated.' },
+          { q:'Polymorphism is best described as?',
+            o:['One interface, many forms','Many interfaces, one form','A single class only','No inheritance needed'], a:0,
+            hint:'"Poly" = many, "morph" = forms → one name, many behaviours.' }
+        ]
+      },
+      dbms: {
+        name:'Database (DBMS)',
+        desc:'SQL, normalization & keys',
+        questions:[
+          { q:'What does SQL stand for?',
+            o:['Structured Query Language','Simple Query Language','Standard Question Language','System Query Logic'], a:0,
+            hint:'SQL is the standard language used to interact with relational databases.' },
+          { q:'A primary key is?',
+            o:['A unique row identifier','Always the first column','An encrypted field','A foreign-key reference'], a:0,
+            hint:'Primary keys uniquely identify rows and never allow NULL.' },
+          { q:'Which SQL clause is used to filter rows?',
+            o:['ORDER BY','GROUP BY','WHERE','HAVING'], a:2,
+            hint:'WHERE filters rows before any grouping takes place.' },
+          { q:'INNER JOIN returns?',
+            o:['All rows from both tables','Only rows that match in both tables','All rows from the left table','All rows from the right table'], a:1,
+            hint:'INNER JOIN keeps only the rows where the join condition matches in both tables.' },
+          { q:'What is database normalization?',
+            o:['Reducing data redundancy','Increasing query speed','Adding indexes','Removing tables'], a:0,
+            hint:'Normalization organises data to minimise duplication and update anomalies.' }
+        ]
+      },
+      networking: {
+        name:'Networking Basics',
+        desc:'TCP/IP, HTTP & protocols',
+        questions:[
+          { q:'What does HTTP stand for?',
+            o:['HyperText Transfer Protocol','High Transfer Text Protocol','HyperText Transmission Process','Home Tool Transfer Protocol'], a:0,
+            hint:'HTTP is the foundation protocol for data communication on the World Wide Web.' },
+          { q:'Which OSI layer handles IP addressing?',
+            o:['Physical','Data Link','Network','Transport'], a:2,
+            hint:'IP addressing belongs to the Network layer (Layer 3).' },
+          { q:'Default port number for HTTPS?',
+            o:['80','443','8080','21'], a:1,
+            hint:'HTTPS (secure) runs on port 443; plain HTTP uses 80.' },
+          { q:'What does DNS do?',
+            o:['Maps domain names to IP addresses','Encrypts data','Routes packets','Manages local files'], a:0,
+            hint:'Domain Name System translates human-readable names into numeric IPs.' },
+          { q:'TCP is a ___ protocol.',
+            o:['Connectionless','Connection-oriented','Wireless','Datagram-based'], a:1,
+            hint:'TCP establishes a connection (handshake) before sending data.' }
+        ]
+      },
+      python: {
+        name:'Python Basics',
+        desc:'Syntax, libraries & core concepts',
+        questions:[
+          { q:'Which keyword defines a function in Python?',
+            o:['function','def','func','define'], a:1,
+            hint:'Python uses "def" to declare functions.' },
+          { q:'How do you write a single-line comment in Python?',
+            o:['//','/* */','#','<!--'], a:2,
+            hint:'The hash symbol # starts a comment in Python.' },
+          { q:'What does the built-in len() function return?',
+            o:['The type of an object','The length of a sequence','The last element','None'], a:1,
+            hint:'len() counts the number of items in a list, string, etc.' },
+          { q:'Which library is primarily used for data manipulation?',
+            o:['NumPy','Pandas','Matplotlib','Flask'], a:1,
+            hint:'Pandas provides DataFrames — the go-to for data wrangling.' },
+          { q:'What is a list comprehension?',
+            o:['A type of loop','A concise way to create lists','A dictionary creator','A runtime error'], a:1,
+            hint:'Syntax: [expression for item in iterable] — a compact list builder.' }
+        ]
+      }
+    }
+  },
+  interview: {
+    label:'Interview Prep', icon:'🎤',
+    topics: {
+      hr: {
+        name:'HR Questions',
+        desc:'Classic HR interview questions',
+        questions:[
+          { q:'Best way to answer "Tell me about yourself"?',
+            o:['Start with personal life details','Focus on your professional journey & skills','Talk extensively about hobbies','Mention salary expectations first'], a:1,
+            hint:'Keep it professional: education → experience → future goals.' },
+          { q:'How should you handle criticism from a supervisor?',
+            o:['Ignore it completely','Listen carefully, understand, and improve','Defend yourself immediately','Start looking for a new job'], a:1,
+            hint:'Showing maturity means listening first, then acting on feedback.' },
+          { q:'Best approach for "What is your greatest weakness?"',
+            o:['Say you have none','Share a real weakness and how you\'re working to improve','Say "I work too hard"','Say "I\'m a perfectionist"'], a:1,
+            hint:'Be honest but frame it as a growth area with a plan.' },
+          { q:'How to answer "Why do you want to join our company?"',
+            o:['I need a job right now','Good salary and perks','The company\'s mission aligns with my career goals','It\'s close to my house'], a:2,
+            hint:'Research the company beforehand and connect your goals to theirs.' },
+          { q:'"Where do you see yourself in 5 years?" — best approach?',
+            o:['I don\'t plan that far ahead','In your exact position','Growing professionally while contributing to the company\'s goals','Retired from work'], a:2,
+            hint:'Show ambition that naturally aligns with the company\'s direction.' }
+        ]
+      },
+      behavioural: {
+        name:'Behavioural Questions',
+        desc:'STAR method & situational questions',
+        questions:[
+          { q:'Which framework should you use for "Describe a challenge you faced"?',
+            o:['SMART','STAR','SWOT','PEST'], a:1,
+            hint:'STAR = Situation, Task, Action, Result — structures your answer.' },
+          { q:'You disagree with your team lead on a decision. Best approach?',
+            o:['Ignore it and do things your way','Raise it privately and discuss respectfully','File a complaint with HR right away','Do nothing and stay silent'], a:1,
+            hint:'A respectful private conversation shows professionalism.' },
+          { q:'How do you handle stress at work?',
+            o:['Avoid all stressful tasks','Prioritise tasks, take short breaks, stay organised','Panic and freeze up','Simply ignore the stress'], a:1,
+            hint:'Demonstrate that you have a healthy, proactive system.' },
+          { q:'A teammate is consistently not pulling their weight. What do you do?',
+            o:['Report to management immediately','Talk to them privately first and offer help','Do their share of work yourself','Ignore it and move on'], a:1,
+            hint:'Communication first — they might be struggling with something.' },
+          { q:'You made a mistake that impacted the project. What do you do?',
+            o:['Try to hide it','Own up, fix it, and learn from the experience','Blame someone else on the team','Quit the project'], a:1,
+            hint:'Accountability plus a concrete action plan shows leadership.' }
+        ]
+      },
+      technical_int: {
+        name:'Technical Interview Tips',
+        desc:'Strategies for technical rounds',
+        questions:[
+          { q:'You don\'t know the answer to a technical question. Best move?',
+            o:['Guess randomly','Honestly say so and explain your thinking process','Stay completely silent','Refuse to answer'], a:1,
+            hint:'Thinking out loud and showing reasoning impresses interviewers.' },
+          { q:'How should you approach a coding problem in an interview?',
+            o:['Start coding the solution immediately','Understand → Plan → Code → Test','Skip edge cases to save time','Look for copy-paste solutions'], a:1,
+            hint:'Always clarify requirements and plan your approach before writing code.' },
+          { q:'Why is writing clean code important?',
+            o:['It is not very important','Makes code readable, maintainable & team-friendly','Only matters for senior developers','Only relevant for open-source projects'], a:1,
+            hint:'Clean code → easier debugging, code reviews, and collaboration.' },
+          { q:'How do you best demonstrate problem-solving ability?',
+            o:['Just present the final answer quickly','Think aloud, break down the problem, show your logic','Stay quiet while thinking','Ask the interviewer for hints'], a:1,
+            hint:'Interviewers want to see your process, not only the final answer.' },
+          { q:'Best way to prepare for system design interview rounds?',
+            o:['Memorise standard answers','Study common patterns and trade-offs deeply','Skip system design entirely','Read only textbooks without practice'], a:1,
+            hint:'Know scalability, load balancers, databases, caching & trade-offs.' }
+        ]
+      },
+      salary: {
+        name:'Salary & Negotiation',
+        desc:'Negotiation & final round strategies',
+        questions:[
+          { q:'How to answer "What are your salary expectations?"',
+            o:['Whatever you are offering','Based on my research and experience, I\'m looking for a specific range','The highest amount possible','I don\'t care about money'], a:1,
+            hint:'Research market rates for the role and location before the interview.' },
+          { q:'Can you counter-offer a salary?',
+            o:['Never — you must accept immediately','Yes, politely and with clear justification','Only after you have already joined','Only through written email'], a:1,
+            hint:'A well-reasoned, respectful counter-offer is completely normal.' },
+          { q:'Best time to bring up salary in an interview?',
+            o:['Right at the very start','After the interviewer asks or after receiving an offer','Never bring it up at all','On the very first phone call'], a:1,
+            hint:'Wait for the interviewer to raise the topic or make a formal offer.' },
+          { q:'What matters besides the base salary?',
+            o:['Nothing else really matters','Benefits, growth opportunities, culture, and work-life balance','Only the annual bonus counts','Only the job location matters'], a:1,
+            hint:'Total compensation includes health insurance, PTO, learning budget, etc.' },
+          { q:'You receive an offer below your expectations. Best response?',
+            o:['Reject the offer immediately','Thank them, ask for time to consider, then negotiate politely','Accept without any questions','Argue aggressively for more'], a:1,
+            hint:'Always thank the recruiter first — keep the relationship positive.' }
+        ]
+      }
+    }
+  }
+};
+
+/* ============================================================
+   STATE
+============================================================ */
+let currentModule   = null;
+let currentTopicKey = null;
+let questions       = [];
+let answers         = [];       // null = unanswered, -1 = skipped, 0-3 = chosen option
+let hintsUsed       = [];
+let currentIdx      = 0;
+let startTime       = null;
+let timerId         = null;
+
+let progress = { aptitude:0, technical:0, interview:0, totalScore:0, tests:0, streak:0 };
+(function(){ try{ let s = localStorage.getItem('ppHub'); if(s) progress = JSON.parse(s); } catch(e){} })();
+
+/* ============================================================
+   PAGE SWITCHING
+============================================================ */
+function showPage(id){
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('on'));
+  document.getElementById(id).classList.add('on');
+}
+function goHome(){
+  stopTimer();
+  showPage('pgDash');
+  renderDash();
+}
+function goTopics(mod){
+  currentModule = mod;
+  showPage('pgTopics');
+  renderTopicPicker();
+}
+
+/* ============================================================
+   DASHBOARD
+============================================================ */
+function renderDash(){
+  document.getElementById('hScore').textContent  = progress.totalScore;
+  document.getElementById('hTests').textContent  = progress.tests;
+  document.getElementById('hStreak').textContent = progress.streak;
+  setBar('Apt', progress.aptitude);
+  setBar('Tec', progress.technical);
+  setBar('Int', progress.interview);
+  setBar('All', Math.round((progress.aptitude + progress.technical + progress.interview) / 3));
+}
+function setBar(tag, pct){
+  let b = document.getElementById('b'+tag);
+  let p = document.getElementById('p'+tag);
+  if(b && p){ setTimeout(()=>{ b.style.width = pct+'%'; p.textContent = pct+'%'; }, 80); }
+}
+
+/* ============================================================
+   TOPIC PICKER
+============================================================ */
+let selectedTopic = null;
+
+function renderTopicPicker(){
+  selectedTopic = null;
+  document.getElementById('startBtn').disabled = true;
+  let mod  = DATA[currentModule];
+  document.getElementById('tpTitle').textContent = mod.icon + ' ' + mod.label + ' – Pick a Topic';
+
+  let grid = document.getElementById('topicGrid');
+  grid.innerHTML = '';
+  Object.keys(mod.topics).forEach(key => {
+    let t    = mod.topics[key];
+    let card = document.createElement('div');
+    card.className   = 'topic-card';
+    card.dataset.key = key;
+    card.innerHTML   = `
+      <div class="tc-top">
+        <span class="tc-name">${t.name}</span>
+        <span class="tc-badge">${t.questions.length} Q</span>
+      </div>
+      <div class="tc-desc">${t.desc}</div>`;
+    card.onclick = () => pickTopic(key);
+    grid.appendChild(card);
+  });
+}
+
+function pickTopic(key){
+  selectedTopic = key;
+  document.querySelectorAll('.topic-card').forEach(c => {
+    c.classList.toggle('picked', c.dataset.key === key);
+  });
+  document.getElementById('startBtn').disabled = false;
+}
+
+/* ============================================================
+   QUIZ
+============================================================ */
+function startQuiz(){
+  if(!selectedTopic) return;
+  currentTopicKey = selectedTopic;
+  questions  = DATA[currentModule].topics[currentTopicKey].questions;
+  answers    = new Array(questions.length).fill(null);
+  hintsUsed  = new Array(questions.length).fill(false);
+  currentIdx = 0;
+  startTime  = Date.now();
+
+  document.getElementById('qzTitle').textContent =
+    DATA[currentModule].icon + ' ' + DATA[currentModule].topics[currentTopicKey].name;
+
+  showPage('pgQuiz');
+  renderMap();
+  renderQuestion();
+  startTimer();
+}
+
+/* ── question-map dots ── */
+function renderMap(){
+  let el = document.getElementById('qmap');
+  el.innerHTML = '';
+  questions.forEach((_, i) => {
+    let classes = 'qmap-dot';
+    if(i === currentIdx)            classes += ' active';
+    if(answers[i] !== null && answers[i] !== -1) classes += ' answered';
+    if(answers[i] === -1)           classes += ' skipped';
+
+    let d        = document.createElement('div');
+    d.className  = classes;
+    d.textContent = i + 1;
+    d.onclick    = () => { currentIdx = i; renderMap(); renderQuestion(); };
+    el.appendChild(d);
+  });
+}
+
+/* ── render current question ── */
+function renderQuestion(){
+  let q = questions[currentIdx];
+
+  document.getElementById('qNum').textContent  = 'Question ' + (currentIdx+1) + ' of ' + questions.length;
+  document.getElementById('qText').textContent = q.q;
+
+  let container = document.getElementById('opts');
+  container.innerHTML = '';
+  q.o.forEach((opt, i) => {
+    let div      = document.createElement('div');
+    div.className = 'opt' + (answers[currentIdx] === i ? ' sel' : '');
+    div.innerHTML = `<div class="opt-lbl">${String.fromCharCode(65+i)}</div><div>${opt}</div>`;
+    div.onclick  = () => { answers[currentIdx] = i; renderMap(); renderQuestion(); };
+    container.appendChild(div);
+  });
+
+  /* hint state */
+  let hBox = document.getElementById('hintBox');
+  if(hintsUsed[currentIdx]){
+    hBox.classList.add('on');
+    document.getElementById('hintText').textContent = q.hint;
+    document.getElementById('hintBtn').disabled     = true;
+    document.getElementById('hintBadge').style.display = 'inline';
+  } else {
+    hBox.classList.remove('on');
+    document.getElementById('hintBtn').disabled     = false;
+    document.getElementById('hintBadge').style.display = 'none';
+  }
+
+  /* skip button – disable once already skipped */
+  document.getElementById('skipBtn').disabled = (answers[currentIdx] === -1);
+
+  /* nav buttons */
+  document.getElementById('prevBtn').disabled = (currentIdx === 0);
+  let isLast = (currentIdx === questions.length - 1);
+  document.getElementById('nextBtn').textContent = isLast ? 'Finish ✓' : 'Next →';
+}
+
+function showHint(){
+  hintsUsed[currentIdx] = true;
+  renderQuestion();
+}
+
+function skipQuestion(){
+  answers[currentIdx] = -1;
+  renderMap();
+  renderQuestion();
+}
+
+function nav(dir){
+  let next = currentIdx + dir;
+  if(next < 0) return;
+  if(next >= questions.length){ finishQuiz(); return; }
+  currentIdx = next;
+  renderMap();
+  renderQuestion();
+}
+
+/* ============================================================
+   TIMER
+============================================================ */
+function startTimer(){
+  stopTimer();
+  timerId = setInterval(() => {
+    let s = Math.floor((Date.now() - startTime) / 1000);
+    let m = Math.floor(s / 60);  s = s % 60;
+    document.getElementById('timer').textContent =
+      m.toString().padStart(2,'0') + ':' + s.toString().padStart(2,'0');
+  }, 1000);
+}
+function stopTimer(){ if(timerId){ clearInterval(timerId); timerId = null; } }
+
+/* ============================================================
+   RESULTS + REVIEW
+============================================================ */
+function finishQuiz(){
+  stopTimer();
+  let correct = 0, wrong = 0, skipped = 0;
+  questions.forEach((q, i) => {
+    if(answers[i] === -1)   skipped++;
+    else if(answers[i] === q.a) correct++;
+    else                    wrong++;
+  });
+
+  let total   = questions.length;
+  let pct     = Math.round((correct / total) * 100);
+  let elapsed = Math.floor((Date.now() - startTime) / 1000);
+  let em      = Math.floor(elapsed / 60), es = elapsed % 60;
+
+  /* persist progress */
+  progress[currentModule] = Math.max(progress[currentModule], pct);
+  progress.totalScore    += correct;
+  progress.tests++;
+  progress.streak = Math.min(progress.streak + 1, 365);
+  try{ localStorage.setItem('ppHub', JSON.stringify(progress)); } catch(e){}
+
+  /* fill result cards */
+  document.getElementById('resScore').textContent   = correct + '/' + total;
+  document.getElementById('resCorrect').textContent = correct;
+  document.getElementById('resWrong').textContent   = wrong;
+  document.getElementById('resSkipped').textContent = skipped;
+  document.getElementById('resPct').textContent     = pct + '%';
+  document.getElementById('resTime').textContent    = em + ':' + es.toString().padStart(2,'0');
+
+  /* motivational message */
+  let msgs = [[90,'🎉 Outstanding! You\'re crushing it!'],
+              [75,'🌟 Great job! Keep it up!'],
+              [60,'👍 Good effort! A little more practice will nail it!'],
+              [0, '💪 Keep going — you\'re on the right track!']];
+  document.getElementById('resMsg').textContent = msgs.find(m => pct >= m[0])[1];
+
+  /* answer-review list */
+  let list = document.getElementById('reviewList');
+  list.innerHTML = '';
+  questions.forEach((q, i) => {
+    let status, badge, icon;
+    if(answers[i] === -1){
+      status = 'skipped-item'; badge = 's'; icon = '⏭';
+    } else if(answers[i] === q.a){
+      status = 'correct';      badge = 'c'; icon = '✓';
+    } else {
+      status = 'wrong';        badge = 'w'; icon = '✕';
+    }
+
+    let ansText = answers[i] === -1
+      ? 'Skipped'
+      : 'You chose: ' + q.o[answers[i]] + (answers[i] !== q.a ? ' | Correct: ' + q.o[q.a] : '');
+
+    let item         = document.createElement('div');
+    item.className   = 'rev-item ' + status;
+    item.innerHTML   = `<div class="rev-badge ${badge}">${icon}</div>
+      <div>
+        <div class="rev-q">${i+1}. ${q.q}</div>
+        <div class="rev-ans">${ansText}</div>
+      </div>`;
+    /* clicking a review item jumps back into the quiz at that question */
+    item.onclick = () => { currentIdx = i; showPage('pgQuiz'); renderMap(); renderQuestion(); startTimer(); };
+    list.appendChild(item);
+  });
+
+  showPage('pgResult');
+  renderDash();
+}
+
+function retake(){ startQuiz(); }
+
+/* ============================================================
+   INIT
+============================================================ */
+renderDash();
+</script>
+</body>
+</html>
